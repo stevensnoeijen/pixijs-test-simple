@@ -3,6 +3,8 @@ import { System } from 'ecsy';
 import { Input } from '../Input';
 
 export class PlayerMovementSystem extends System {
+    private static readonly SPRINT_SPEED = 2;
+
 	public execute(delta: number, time: number): void {
 		for (const entity of this.queries.entities.results) {
 			const spriteComponent = entity.getComponent(SpriteComponent)!;
@@ -29,6 +31,11 @@ export class PlayerMovementSystem extends System {
 			if (Input.isKeyDown('d')) {
 				moveX += 2 * delta;
 			}
+
+            if (Input.isKeyDown('shift')) {
+                moveX *= PlayerMovementSystem.SPRINT_SPEED;
+                moveY *= PlayerMovementSystem.SPRINT_SPEED;
+            }
 
             spriteComponent.sprite.x += moveX;
             spriteComponent.sprite.y += moveY;

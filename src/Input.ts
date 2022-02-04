@@ -1,11 +1,11 @@
 export type KeyStatus = 'keydown' | 'keyup';
-type KeysStatus = { [key: string]: KeyboardEvent | undefined };
+type KeysStatus = { [key: string]: { type: KeyStatus, repeat: boolean } | undefined };
 
 export class Input {
     private static keyEvent: KeysStatus = {};
 
     public static addKeyEvent(event: KeyboardEvent): void {
-        this.keyEvent[event.key] = event;
+        this.keyEvent[event.key.toLowerCase()] = { type: event.type as KeyStatus, repeat: event.repeat };
     }
 
     /**

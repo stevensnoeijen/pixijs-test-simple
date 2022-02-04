@@ -17,6 +17,7 @@ export class InputSystem extends System {
 
     public execute(delta: number, time: number): void {
         Input.clearKeysStatus();
+
         if (this.keyQueue.length > 0) {
             let event;
             while ((event = this.keyQueue.pop())) {
