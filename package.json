@@ -9,6 +9,7 @@
     "vite": "^2.7.2"
   },
   "dependencies": {
+    "ecsy": "^0.4.2",
     "pixi.js": "^6.2.1"
   }
 }
