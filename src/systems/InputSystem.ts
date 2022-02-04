@@ -1,5 +1,5 @@
 import { Attributes, System, World } from 'ecsy';
-import { Input, KeyStatus } from '../Input';
+import { Input } from '../Input';
 
 export class InputSystem extends System {
     private keyQueue: KeyboardEvent[] = [];
