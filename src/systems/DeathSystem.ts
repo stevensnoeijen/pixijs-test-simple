@@ -1,3 +1,5 @@
+import { TextComponent } from './../components/TextComponent';
+import { GameStatusComponent } from './../components/GameStatusComponent';
 import { EnemyComponent } from './../components/EnemyComponent';
 import { PlayerComponent } from './../components/PlayerComponent';
 import { System } from 'ecsy';
@@ -11,7 +13,10 @@ export class DeathSystem extends System {
 
         for(const enemy of this.queries.enemies.results) {
             if (isCollided(player.getComponent(SpriteComponent)!.sprite, enemy.getComponent(SpriteComponent)!.sprite, 20)) {
-                console.log('player dead');
+                const gameStatusText = this.queries.gamestatus.results[0].getComponent(TextComponent)!.text;
+                gameStatusText.text = "GAME OVER";
+                gameStatusText.style.fill = 'red';
+
                 this.world.stop();
             }
         }
@@ -23,6 +28,9 @@ DeathSystem.queries = {
         components: [SpriteComponent, EnemyComponent],
     },
     player: {
-        components: [SpriteComponent, PlayerComponent]
-    }
+        components: [SpriteComponent, PlayerComponent],
+    },
+    gamestatus: {
+        components: [GameStatusComponent, TextComponent],
+    },
 };

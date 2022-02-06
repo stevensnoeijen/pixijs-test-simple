@@ -1,9 +1,10 @@
+import { GameStatusComponent } from './components/GameStatusComponent';
 import { TextComponent } from './components/TextComponent';
 import { EnemyComponent } from './components/EnemyComponent';
 import { PlayerComponent } from './components/PlayerComponent';
 import { VelocityComponent } from './components/VelocityComponent';
 import { SpriteComponent } from './components/SpriteComponent';
-import { World } from 'ecsy';
+import { Entity, World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 import { ScoreComponent } from './components/ScoreComponent';
 
@@ -12,27 +13,39 @@ export class EntityFactory {
 
     }
 
-    public createLevel(): void {
+    public createLevel(): Entity {
         const sprite = PIXI.Sprite.from('level.png');
         sprite.scale.set(2.5);
         this.application.stage.addChildAt(sprite, 0);
 
-        this.world.createEntity()
+        return this.world.createEntity()
             .addComponent(SpriteComponent, { sprite });
     }
 
-    public createTimer(): void { 
+    public createTimer(): Entity { 
         let text = new PIXI.Text('0');
         this.application.stage.addChild(text);
         text.x = 5;
         text.y = 5;
 
-        this.world.createEntity()
+        return this.world.createEntity()
             .addComponent(TextComponent, { text })
             .addComponent(ScoreComponent);
     }
 
-    public createMario(): void {
+    public createGameStatus(): Entity {
+        let text = new PIXI.Text('');
+        this.application.stage.addChild(text);
+        text.anchor.set(0.5);
+        text.x = this.application.screen.width / 2;
+        text.y = 25;
+
+        return this.world.createEntity()
+            .addComponent(TextComponent, { text })
+            .addComponent(GameStatusComponent);
+    }
+
+    public createMario(): Entity {
         const sprite = PIXI.Sprite.from('mario.png');
         sprite.scale.set(0.5);
         sprite.anchor.set(0.5);
@@ -40,12 +53,12 @@ export class EntityFactory {
         sprite.y = this.application.screen.height / 2;
         this.application.stage.addChild(sprite);
 
-        this.world.createEntity()
+        return this.world.createEntity()
             .addComponent(SpriteComponent, { sprite })
             .addComponent(PlayerComponent);
     }
 
-    public createFish(): void {
+    public createFish(): Entity {
         const sprite = PIXI.Sprite.from('fish.png');
         sprite.scale.set(4);
         sprite.anchor.set(0.5);
@@ -60,7 +73,7 @@ export class EntityFactory {
 
         this.application.stage.addChild(sprite);
 
-        this.world.createEntity()
+        return this.world.createEntity()
             .addComponent(SpriteComponent, { sprite })
             .addComponent(EnemyComponent)
             .addComponent(VelocityComponent, { x: left ? 1 : -1, y: 0 });

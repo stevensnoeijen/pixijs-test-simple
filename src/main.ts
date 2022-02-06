@@ -1,3 +1,4 @@
+import { GameStatusComponent } from './components/GameStatusComponent';
 import { ScoreSystem } from './systems/ScoreSystem';
 import { TextComponent } from './components/TextComponent';
 import { EnemyComponent } from './components/EnemyComponent';
@@ -27,6 +28,7 @@ world.registerComponent(VelocityComponent);
 world.registerComponent(EnemyComponent);
 world.registerComponent(TextComponent);
 world.registerComponent(ScoreComponent);
+world.registerComponent(GameStatusComponent);
 
 const entityFactory = new EntityFactory(application, world);
 
@@ -40,6 +42,7 @@ world.registerSystem(ScoreSystem);
 
 entityFactory.createLevel();
 entityFactory.createTimer();
+const gameStatus = entityFactory.createGameStatus();
 entityFactory.createMario();
 
 application.ticker.add((delta: number) => {
@@ -48,9 +51,13 @@ application.ticker.add((delta: number) => {
 
 application.start();
 
+const gameStatusText = gameStatus.getComponent(TextComponent)!.text;
+
 window.onfocus = () => {
-    application.start();
+    gameStatusText.text = "";
+    world.play();
 };
 window.onblur = () => {
-	application.stop();
+    gameStatusText.text = "PAUSE";
+	world.stop();
 };
