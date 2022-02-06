@@ -12,7 +12,7 @@ export class DeathSystem extends System {
         const player = this.queries.player.results[0];
 
         for(const enemy of this.queries.enemies.results) {
-            if (isCollided(player.getComponent(SpriteComponent)!.sprite, enemy.getComponent(SpriteComponent)!.sprite, 20)) {
+            if (isCollided(player.getComponent(SpriteComponent)!.sprite, enemy.getComponent(SpriteComponent)!.sprite, 25)) {
                 const gameStatusText = this.queries.gamestatus.results[0].getComponent(TextComponent)!.text;
                 gameStatusText.text = "GAME OVER";
                 gameStatusText.style.fill = 'red';

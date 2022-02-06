@@ -58,12 +58,12 @@ export class EntityFactory {
             .addComponent(PlayerComponent);
     }
 
-    public createFish(): Entity {
+    public createFish(speed = 1): Entity {
         const sprite = PIXI.Sprite.from('fish.png');
         sprite.scale.set(4);
         sprite.anchor.set(0.5);
         sprite.x = Math.random() > 0.5 ? 800 : 0;
-        sprite.y = Math.random() * 300 + 200;
+        sprite.y = Math.random() * 400 + 100;
 
         const left = sprite.x === 0; 
 
@@ -76,6 +76,6 @@ export class EntityFactory {
         return this.world.createEntity()
             .addComponent(SpriteComponent, { sprite })
             .addComponent(EnemyComponent)
-            .addComponent(VelocityComponent, { x: left ? 1 : -1, y: 0 });
+            .addComponent(VelocityComponent, { x: left ? speed : -speed, y: 0 });
     }
 }
