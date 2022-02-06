@@ -1,3 +1,4 @@
+import { CleanupSystem } from './systems/CleanupSystem';
 import { VelocitySystem } from './systems/VelocitySystem';
 import { VelocityComponent } from './components/VelocityComponent';
 import { EntityFactory } from './EntityFactory';
@@ -19,6 +20,7 @@ world.registerComponent(VelocityComponent);
 world.registerSystem(InputSystem);
 world.registerSystem(PlayerMovementSystem, { application });
 world.registerSystem(VelocitySystem);
+world.registerSystem(CleanupSystem, { application });
 
 const entityFactory = new EntityFactory(application, world);
 entityFactory.createLevel();
