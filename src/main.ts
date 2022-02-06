@@ -1,3 +1,5 @@
+import { BlinkSystem } from './systems/BlinkSystem';
+import { BlinkComponent } from './components/BlinkComponent';
 import { GameStatusComponent } from './components/GameStatusComponent';
 import { ScoreSystem } from './systems/ScoreSystem';
 import { TextComponent } from './components/TextComponent';
@@ -29,6 +31,7 @@ world.registerComponent(EnemyComponent);
 world.registerComponent(TextComponent);
 world.registerComponent(ScoreComponent);
 world.registerComponent(GameStatusComponent);
+world.registerComponent(BlinkComponent);
 
 const entityFactory = new EntityFactory(application, world);
 
@@ -39,14 +42,26 @@ world.registerSystem(CleanupSystem, { application });
 world.registerSystem(RespawnSystem, { application, entityFactory });
 world.registerSystem(DeathSystem);
 world.registerSystem(ScoreSystem);
+world.registerSystem(BlinkSystem);
 
 entityFactory.createLevel();
 entityFactory.createTimer();
 const gameStatus = entityFactory.createGameStatus();
 entityFactory.createMario();
 
-application.ticker.add((delta: number) => {
-    world.execute(delta, performance.now());
+
+let pause = false;
+let gameTime = 0;
+let lastUpdateTime = performance.now();
+application.ticker.add((delta) => {
+    if(pause) {
+        return;
+    }
+
+    gameTime += performance.now() - lastUpdateTime;
+    world.execute(delta, gameTime);
+
+    lastUpdateTime = performance.now();
 });
 
 application.start();
@@ -54,10 +69,13 @@ application.start();
 const gameStatusText = gameStatus.getComponent(TextComponent)!.text;
 
 window.onfocus = () => {
+    lastUpdateTime = performance.now();
     gameStatusText.text = "";
     world.play();
+    pause = false;
 };
 window.onblur = () => {
+    pause = true;
     gameStatusText.text = "PAUSE";
 	world.stop();
 };
