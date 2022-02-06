@@ -1,21 +1,9 @@
-import * as PIXI from 'pixi.js';
 import { SpriteComponent } from './../components/SpriteComponent';
-import { Attributes, System, World } from 'ecsy';
 import { Input } from '../Input';
 import { PlayerComponent } from '../components/PlayerComponent';
-
-type PlayerMovementSystemAttributes = Attributes & {
-	application: PIXI.Application;
-}
-export class PlayerMovementSystem extends System {
+import { PixiSystem } from './PixiSystem';
+export class PlayerMovementSystem extends PixiSystem {
     private static readonly SPRINT_SPEED = 2;
-
-	private readonly application: PIXI.Application;
-
-	constructor(world: World, attributes: PlayerMovementSystemAttributes) {
-		super(world, arguments);
-		this.application = attributes.application;
-	}
 
 	public execute(delta: number, time: number): void {
 		for (const entity of this.queries.entities.results) {
