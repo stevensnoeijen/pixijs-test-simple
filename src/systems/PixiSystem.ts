@@ -9,7 +9,7 @@ export abstract class PixiSystem extends System {
 	protected readonly application: PIXI.Application;
 
 	constructor(world: World, attributes: PixiSystemAttributes) {
-		super(world, arguments);
+		super(world, attributes);
 		this.application = attributes.application;
 	}
 

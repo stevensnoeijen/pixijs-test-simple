@@ -1,3 +1,4 @@
+import { EnemyComponent } from './components/EnemyComponent';
 import { CleanupSystem } from './systems/CleanupSystem';
 import { VelocitySystem } from './systems/VelocitySystem';
 import { VelocityComponent } from './components/VelocityComponent';
@@ -8,27 +9,32 @@ import { PlayerMovementSystem } from './systems/PlayerMovementSystem';
 import { InputSystem } from './systems/InputSystem';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
+import { RespawnSystem } from './systems/RespawnSystem';
 
 const application = new PIXI.Application();
 
-document.getElementById("app")?.appendChild(application.view);
+document.getElementById('app')?.appendChild(application.view);
 
 const world = new World();
+
 world.registerComponent(PlayerComponent);
 world.registerComponent(SpriteComponent);
 world.registerComponent(VelocityComponent);
+world.registerComponent(EnemyComponent);
+
+const entityFactory = new EntityFactory(application, world);
+
 world.registerSystem(InputSystem);
 world.registerSystem(PlayerMovementSystem, { application });
 world.registerSystem(VelocitySystem);
 world.registerSystem(CleanupSystem, { application });
+world.registerSystem(RespawnSystem, { application, entityFactory });
 
-const entityFactory = new EntityFactory(application, world);
 entityFactory.createLevel();
 entityFactory.createMario();
-Array.from({ length: 3 }).forEach(() => entityFactory.createFish());
 
 application.ticker.add((delta: number) => {
     world.execute(delta, performance.now());
 });
 
-application.start();;
+application.start();

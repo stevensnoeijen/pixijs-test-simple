@@ -1,3 +1,4 @@
+import { EnemyComponent } from './components/EnemyComponent';
 import { PlayerComponent } from './components/PlayerComponent';
 import { VelocityComponent } from './components/VelocityComponent';
 import { SpriteComponent } from './components/SpriteComponent';
@@ -48,6 +49,7 @@ export class EntityFactory {
 
         this.world.createEntity()
             .addComponent(SpriteComponent, { sprite })
+            .addComponent(EnemyComponent)
             .addComponent(VelocityComponent, { x: left ? 1 : -1, y: 0 });
     }
 }
