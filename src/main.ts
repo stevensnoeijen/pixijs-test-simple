@@ -49,7 +49,9 @@ world.registerSystem(BlinkSystem);
 entityFactory.createLevel();
 entityFactory.createTimer();
 const gameStatus = entityFactory.createGameStatus();
-entityFactory.createMario();
+const mario = entityFactory.createMario();
+
+Audio.MUSIC.play();
 
 let pause = false;
 let gameTime = 0;
@@ -70,6 +72,10 @@ application.start();
 const gameStatusText = gameStatus.getComponent(TextComponent)!.text;
 
 window.onfocus = () => {
+    if (!mario.alive) {
+        return;
+    }
+
     lastUpdateTime = performance.now();
     gameStatusText.text = "";
     world.play();
