@@ -64,7 +64,7 @@ export class EntityFactory {
         sprite.scale.set(4);
         sprite.anchor.set(0.5);
         sprite.x = Math.random() > 0.5 ? 800 : 0;
-        sprite.y = Math.random() * 400 + 80;
+        sprite.y = Math.random() * 380 + 120;
 
         const left = sprite.x === 0; 
 
