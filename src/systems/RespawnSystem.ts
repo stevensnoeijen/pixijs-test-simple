@@ -32,11 +32,11 @@ export class RespawnSystem extends PixiSystem {
 
     private shouldRespawn(time: number): boolean {
         return this.queries.enemies.results.length < this.level * RespawnSystem.FISH_PER_LEVEL
-            && this.lastSpawnTime + RespawnSystem.SPAWN_DELAY < time;
+            && this.lastSpawnTime + (RespawnSystem.SPAWN_DELAY - this.level * 25) < time;
     }
 
     private spawnFish(time: number): void {
-        this.entityFactory.createFish(this.level > 2 ? 1 + Math.random() * this.level: undefined);
+        this.entityFactory.createFish(this.level > 2 ? 1 + Math.random() * this.level / 2: undefined);
         this.lastSpawnTime = time;
     }
 }
