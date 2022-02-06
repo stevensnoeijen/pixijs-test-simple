@@ -10,6 +10,7 @@ import { InputSystem } from './systems/InputSystem';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 import { RespawnSystem } from './systems/RespawnSystem';
+import { DeathSystem } from './systems/DeathSystem';
 
 const application = new PIXI.Application();
 
@@ -29,6 +30,7 @@ world.registerSystem(PlayerMovementSystem, { application });
 world.registerSystem(VelocitySystem);
 world.registerSystem(CleanupSystem, { application });
 world.registerSystem(RespawnSystem, { application, entityFactory });
+world.registerSystem(DeathSystem);
 
 entityFactory.createLevel();
 entityFactory.createMario();
