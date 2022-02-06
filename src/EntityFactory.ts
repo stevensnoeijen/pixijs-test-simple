@@ -1,9 +1,11 @@
+import { TextComponent } from './components/TextComponent';
 import { EnemyComponent } from './components/EnemyComponent';
 import { PlayerComponent } from './components/PlayerComponent';
 import { VelocityComponent } from './components/VelocityComponent';
 import { SpriteComponent } from './components/SpriteComponent';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
+import { ScoreComponent } from './components/ScoreComponent';
 
 export class EntityFactory {
     constructor(private readonly application: PIXI.Application, private readonly world: World) {
@@ -17,6 +19,17 @@ export class EntityFactory {
 
         this.world.createEntity()
             .addComponent(SpriteComponent, { sprite });
+    }
+
+    public createTimer(): void { 
+        let text = new PIXI.Text('0');
+        this.application.stage.addChild(text);
+        text.x = 5;
+        text.y = 5;
+
+        this.world.createEntity()
+            .addComponent(TextComponent, { text })
+            .addComponent(ScoreComponent);
     }
 
     public createMario(): void {
