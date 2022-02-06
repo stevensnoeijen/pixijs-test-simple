@@ -1,3 +1,4 @@
+import { LevelComponent } from './components/LevelComponent';
 import { Howl } from 'howler';
 import { BlinkSystem } from './systems/BlinkSystem';
 import { BlinkComponent } from './components/BlinkComponent';
@@ -17,7 +18,7 @@ import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 import { RespawnSystem } from './systems/RespawnSystem';
 import { DeathSystem } from './systems/DeathSystem';
-import { ScoreComponent } from './components/ScoreComponent';
+import { TimerComponent } from './components/TimerComponent';
 import { Audio } from './Audio';
 
 const application = new PIXI.Application();
@@ -31,9 +32,10 @@ world.registerComponent(SpriteComponent);
 world.registerComponent(VelocityComponent);
 world.registerComponent(EnemyComponent);
 world.registerComponent(TextComponent);
-world.registerComponent(ScoreComponent);
+world.registerComponent(TimerComponent);
 world.registerComponent(GameStatusComponent);
 world.registerComponent(BlinkComponent);
+world.registerComponent(LevelComponent);
 
 const entityFactory = new EntityFactory(application, world);
 
@@ -80,7 +82,10 @@ window.onfocus = () => {
     gameStatusText.text = "";
     world.play();
     pause = false;
-    Audio.MUSIC.play();
+
+    if (!Audio.MUSIC.playing()) {
+        Audio.MUSIC.play();
+    }
 };
 window.onblur = () => {
     pause = true;

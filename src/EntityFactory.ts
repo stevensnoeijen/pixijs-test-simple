@@ -1,3 +1,4 @@
+import { LevelComponent } from './components/LevelComponent';
 import { GameStatusComponent } from './components/GameStatusComponent';
 import { TextComponent } from './components/TextComponent';
 import { EnemyComponent } from './components/EnemyComponent';
@@ -6,7 +7,7 @@ import { VelocityComponent } from './components/VelocityComponent';
 import { SpriteComponent } from './components/SpriteComponent';
 import { Entity, World } from 'ecsy';
 import * as PIXI from 'pixi.js';
-import { ScoreComponent } from './components/ScoreComponent';
+import { TimerComponent } from './components/TimerComponent';
 
 export class EntityFactory {
     constructor(private readonly application: PIXI.Application, private readonly world: World) {
@@ -30,7 +31,7 @@ export class EntityFactory {
 
         return this.world.createEntity()
             .addComponent(TextComponent, { text })
-            .addComponent(ScoreComponent);
+            .addComponent(TimerComponent);
     }
 
     public createGameStatus(): Entity {
@@ -42,6 +43,7 @@ export class EntityFactory {
 
         return this.world.createEntity()
             .addComponent(TextComponent, { text })
+            .addComponent(LevelComponent)
             .addComponent(GameStatusComponent);
     }
 
