@@ -20,23 +20,10 @@ world.registerSystem(InputSystem);
 world.registerSystem(PlayerMovementSystem, { application });
 world.registerSystem(VelocitySystem);
 
-const mario = world.createEntity()
-const sprite = PIXI.Sprite.from('mario.png');
-sprite.scale.set(0.5);
-sprite.anchor.set(0.5);
-sprite.x = application.screen.width / 2;
-sprite.y = application.screen.height / 2;
-application.stage.addChild(sprite);
-mario.addComponent(SpriteComponent, { sprite: sprite });
-mario.addComponent(PlayerComponent);
-
-const level = PIXI.Sprite.from('level.png');
-level.scale.set(2.5);
-application.stage.addChildAt(level, 0);
-
 const entityFactory = new EntityFactory(application, world);
-
-Array.from({ length: 5 }).forEach(() => entityFactory.createFish());
+entityFactory.createLevel();
+entityFactory.createMario();
+Array.from({ length: 3 }).forEach(() => entityFactory.createFish());
 
 application.ticker.add((delta: number) => {
     world.execute(delta, performance.now());
