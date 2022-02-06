@@ -2,7 +2,8 @@
   "name": "pixijs-test-simple",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build --base=/pixijs-test-simple/ --outDir=docs"
   },
   "devDependencies": {
     "@types/howler": "^2.2.4",
