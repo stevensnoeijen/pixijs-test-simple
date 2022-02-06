@@ -3,6 +3,7 @@ import { SpriteComponent } from './../components/SpriteComponent';
 import { Attributes, System, World } from 'ecsy';
 
 export class VelocitySystem extends System {
+    private static readonly LEVEL_FLOOR = 480;
 
     constructor(world: World, attributes: Attributes) {
         super(world, attributes);
@@ -14,7 +15,10 @@ export class VelocitySystem extends System {
             const spriteComponent = entity.getComponent(SpriteComponent)!;
 
             spriteComponent.sprite.x += velocityComponent.x * delta;
-            spriteComponent.sprite.y += velocityComponent.y * delta;
+
+            if(spriteComponent.sprite.y <= VelocitySystem.LEVEL_FLOOR) {
+                spriteComponent.sprite.y += velocityComponent.y * delta;
+            }
         }
     }
 }

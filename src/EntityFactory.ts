@@ -55,6 +55,7 @@ export class EntityFactory {
 
         return this.world.createEntity()
             .addComponent(SpriteComponent, { sprite })
+            .addComponent(VelocityComponent, { y: 1, x: 0 })
             .addComponent(PlayerComponent);
     }
 
@@ -63,7 +64,7 @@ export class EntityFactory {
         sprite.scale.set(4);
         sprite.anchor.set(0.5);
         sprite.x = Math.random() > 0.5 ? 800 : 0;
-        sprite.y = Math.random() * 400 + 100;
+        sprite.y = Math.random() * 400 + 80;
 
         const left = sprite.x === 0; 
 
