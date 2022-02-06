@@ -17,7 +17,7 @@ world.registerComponent(PlayerComponent);
 world.registerComponent(SpriteComponent);
 world.registerComponent(VelocityComponent);
 world.registerSystem(InputSystem);
-world.registerSystem(PlayerMovementSystem);
+world.registerSystem(PlayerMovementSystem, { application });
 world.registerSystem(VelocitySystem);
 
 const mario = world.createEntity()

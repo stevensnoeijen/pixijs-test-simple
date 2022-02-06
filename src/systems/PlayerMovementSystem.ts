@@ -1,10 +1,21 @@
+import * as PIXI from 'pixi.js';
 import { SpriteComponent } from './../components/SpriteComponent';
-import { System } from 'ecsy';
+import { Attributes, System, World } from 'ecsy';
 import { Input } from '../Input';
 import { PlayerComponent } from '../components/PlayerComponent';
 
+type PlayerMovementSystemAttributes = Attributes & {
+	application: PIXI.Application;
+}
 export class PlayerMovementSystem extends System {
     private static readonly SPRINT_SPEED = 2;
+
+	private readonly application: PIXI.Application;
+
+	constructor(world: World, attributes: PlayerMovementSystemAttributes) {
+		super(world, arguments);
+		this.application = attributes.application;
+	}
 
 	public execute(delta: number, time: number): void {
 		for (const entity of this.queries.entities.results) {
@@ -38,16 +49,15 @@ export class PlayerMovementSystem extends System {
                 moveY *= PlayerMovementSystem.SPRINT_SPEED;
             }
 
-			if (moveX > 0 && spriteComponent.sprite.x < 800 - spriteComponent.sprite.width / 2) {
+			if (moveX > 0 && spriteComponent.sprite.x < this.application.screen.width - spriteComponent.sprite.width / 2) {
 				spriteComponent.sprite.x += moveX;
 			} else if (moveX < 0 && spriteComponent.sprite.x > 0 + spriteComponent.sprite.width / 2) {
 				spriteComponent.sprite.x += moveX;
 			}
 
-			if (spriteComponent.sprite.x > 0 && spriteComponent.sprite.x < 800) {
-				
-			}
-			if (spriteComponent.sprite.y > 0 && spriteComponent.sprite.y < 600) {           
+			if (moveY > 0 && spriteComponent.sprite.y < (this.application.screen.height - 70) - spriteComponent.sprite.height / 2) {
+				spriteComponent.sprite.y += moveY;
+			} else if (moveY < 0 && spriteComponent.sprite.y > 50 + spriteComponent.sprite.height / 2) {
             	spriteComponent.sprite.y += moveY;
 			}
 		}
