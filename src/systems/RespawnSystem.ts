@@ -6,6 +6,7 @@ import { World } from 'ecsy';
 import { SpriteComponent } from '../components/SpriteComponent';
 import { PixiSystem, PixiSystemAttributes } from './PixiSystem';
 import { EnemyComponent } from '../components/EnemyComponent';
+import { Howl } from 'howler';
 
 type RespawnSystemAttributes = PixiSystemAttributes & {
     entityFactory: EntityFactory;
@@ -14,6 +15,9 @@ type RespawnSystemAttributes = PixiSystemAttributes & {
 export class RespawnSystem extends PixiSystem {
     private static SPAWN_DELAY = 1200;
     private static FISH_PER_LEVEL = 3;
+    private static LEVEL_UP = new Howl({
+        src: 'levelup.wav',
+      });
 
     private readonly entityFactory: EntityFactory;
     private lastSpawnTime: number = 0;
@@ -50,6 +54,7 @@ export class RespawnSystem extends PixiSystem {
             this.level = 1 + Math.floor( time / 1000 / 10);
             
             if (this.level !== 1) {
+                RespawnSystem.LEVEL_UP.play();
                 this.queries.gamestatus.results[0].addComponent(BlinkComponent, { blinkTime: 250, removeAfter: 1500, elapsedTime: 0 });
             }
         }

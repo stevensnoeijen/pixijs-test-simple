@@ -1,3 +1,4 @@
+import { Howl } from 'howler';
 import { BlinkSystem } from './systems/BlinkSystem';
 import { BlinkComponent } from './components/BlinkComponent';
 import { GameStatusComponent } from './components/GameStatusComponent';
@@ -49,11 +50,16 @@ entityFactory.createTimer();
 const gameStatus = entityFactory.createGameStatus();
 entityFactory.createMario();
 
+const song = new Howl({
+    src: 'song.wav',
+    loop: true,
+});
+song.play()
 
 let pause = false;
 let gameTime = 0;
 let lastUpdateTime = performance.now();
-application.ticker.add((delta) => {
+application.ticker.add((delta: number) => {
     if(pause) {
         return;
     }
@@ -77,5 +83,6 @@ window.onfocus = () => {
 window.onblur = () => {
     pause = true;
     gameStatusText.text = "PAUSE";
+    song.pause();
 	world.stop();
 };
