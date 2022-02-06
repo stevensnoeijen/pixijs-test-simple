@@ -3,7 +3,6 @@ import { TextComponent } from './../components/TextComponent';
 import { BlinkComponent } from './../components/BlinkComponent';
 
 export class BlinkSystem extends System {
-
     private lastExecuteTime = 0;
 
     public execute(delta: number, time: number): void {       

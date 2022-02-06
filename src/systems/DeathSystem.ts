@@ -6,19 +6,16 @@ import { PlayerComponent } from './../components/PlayerComponent';
 import { System } from 'ecsy';
 import { SpriteComponent } from '../components/SpriteComponent';
 import { isCollided } from '../collision';
+import { Audio } from '../Audio';
 
 export class DeathSystem extends System {
-    private static readonly MARIO_DIE = new Howl({
-        src: 'mariodie.wav',
-    });
-
     public execute(delta: number, time: number): void {
         const player = this.queries.player.results[0];
 
         for(const enemy of this.queries.enemies.results) {
             if (isCollided(player.getComponent(SpriteComponent)!.sprite, enemy.getComponent(SpriteComponent)!.sprite, 25)) {
                 const gameStatusText = this.queries.gamestatus.results[0].getComponent(TextComponent)!.text;
-                DeathSystem.MARIO_DIE.play();
+                Audio.MARIO_DIE.play();
                 gameStatusText.text = "GAME OVER";
                 gameStatusText.style.fill = 'red';
 

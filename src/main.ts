@@ -18,6 +18,7 @@ import * as PIXI from 'pixi.js';
 import { RespawnSystem } from './systems/RespawnSystem';
 import { DeathSystem } from './systems/DeathSystem';
 import { ScoreComponent } from './components/ScoreComponent';
+import { Audio } from './Audio';
 
 const application = new PIXI.Application();
 
@@ -50,12 +51,6 @@ entityFactory.createTimer();
 const gameStatus = entityFactory.createGameStatus();
 entityFactory.createMario();
 
-const song = new Howl({
-    src: 'song.wav',
-    loop: true,
-});
-song.play()
-
 let pause = false;
 let gameTime = 0;
 let lastUpdateTime = performance.now();
@@ -79,10 +74,11 @@ window.onfocus = () => {
     gameStatusText.text = "";
     world.play();
     pause = false;
+    Audio.MUSIC.play();
 };
 window.onblur = () => {
     pause = true;
     gameStatusText.text = "PAUSE";
-    song.pause();
+    Audio.MUSIC.pause();
 	world.stop();
 };

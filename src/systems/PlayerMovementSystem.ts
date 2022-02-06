@@ -3,6 +3,7 @@ import { SpriteComponent } from './../components/SpriteComponent';
 import { Input } from '../Input';
 import { PlayerComponent } from '../components/PlayerComponent';
 import { PixiSystem } from './PixiSystem';
+import { Audio } from '../Audio';
 
 export class PlayerMovementSystem extends PixiSystem {
 	private static readonly MOVE_SPEED = 2;
@@ -34,6 +35,10 @@ export class PlayerMovementSystem extends PixiSystem {
 			}
 			if (Input.isKeyDown('d')) {
 				moveX += PlayerMovementSystem.MOVE_SPEED * delta;
+			}
+
+			if (Input.isKeyUp('m')) {
+				Audio.MUSIC.mute(!Audio.MUSIC.mute());
 			}
 
             if (Input.isKeyDown('shift')) {
