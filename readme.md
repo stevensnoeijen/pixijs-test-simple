@@ -1,5 +1,7 @@
 # pixijs-test-simple
 
+[Demo](https://stevensnoeijen.github.io/pixijs-test-simple/)
+
 Hi.
 
 Thanks for making some time to make this assignment for us. I promise it won't be too hard, and won't take too much of your time. This assignment is meant for us to get a small peek into how you work, how you structure and document your code, and to see how you solve problems.
