@@ -1,3 +1,4 @@
+import { PlayerComponent } from './../components/PlayerComponent';
 import { LevelComponent } from './../components/LevelComponent';
 import { TimerComponent } from '../components/TimerComponent';
 import { TextComponent } from './../components/TextComponent';
@@ -13,7 +14,9 @@ export class ScoreSystem extends System {
 
         this.updateLevel(time);
         this.queries.gamestatus.results[0].getMutableComponent(LevelComponent)!.number = this.level;
-        this.queries.gamestatus.results[0].getComponent(TextComponent)!.text.text = `Level ${this.level}`;
+        if (this.queries.player.results[0].alive) {
+            this.queries.gamestatus.results[0].getComponent(TextComponent)!.text.text = `Level ${this.level}`;
+        }
     }
     
     private updateLevel(time: number): void {
@@ -31,6 +34,9 @@ export class ScoreSystem extends System {
 }
 
 ScoreSystem.queries = {
+    player: {
+        components: [PlayerComponent],
+    },
     timer: {
         components: [TextComponent, TimerComponent],
     },
