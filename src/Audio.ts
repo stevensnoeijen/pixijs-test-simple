@@ -2,15 +2,15 @@ import { Howl } from 'howler';
 
 export class Audio {
     public static readonly MUSIC = new Howl({
-        src: 'music.wav',
+        src: 'music.mp3',
         loop: true,
     });
 
     public static LEVEL_UP = new Howl({
-        src: 'levelup.wav',
+        src: 'levelup.mp3',
     });
 
     public static readonly MARIO_DIE = new Howl({
-        src: 'mariodie.wav',
+        src: 'mariodie.mp3',
     });
 }
